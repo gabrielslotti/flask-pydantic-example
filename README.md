@@ -1,4 +1,4 @@
-# ![alt text](https://github.com/pydantic) Flask-Pydantic Example
+# Flask-Pydantic Example
 ## 💡 Basic usage
 1. Create your virtual env or use the poetry shell
 ```shell
