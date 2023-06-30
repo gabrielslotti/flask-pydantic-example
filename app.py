@@ -12,6 +12,7 @@ class StatusEnum(Enum):
     ok = 'ok'
     error = 'error'
 
+
 class BaseResponseModel(BaseModel):
     status: StatusEnum
     message: str
@@ -21,9 +22,11 @@ class BaseResponseModel(BaseModel):
 def hello_world() -> BaseResponseModel:
     return jsonify(status='ok', message='Hello, World!'), 200
 
+
 ############################
 # Validate URL Path Params #
 ############################
+
 @app.route('/name/<name>', methods=['GET'])
 @validate()
 def get_name(name: str) -> BaseResponseModel:
@@ -34,9 +37,11 @@ def get_name(name: str) -> BaseResponseModel:
 def get_number(number: int) -> BaseResponseModel:
     return jsonify(status='ok', message=f'My number is {number}!')
 
+
 #############################
 # Validate URL Query Params #
 #############################
+
 class QueryModel(BaseModel):
     age: int
     first_name: str
@@ -54,6 +59,7 @@ def query(query: QueryModel) -> BaseResponseModel:
 #########################
 # Validate request body #
 #########################
+
 class BodyModel(BaseModel):
     age: int
     first_name: str
@@ -72,10 +78,24 @@ def body(body: BodyModel) -> BaseResponseModel:
 ##################################
 # Validate body and query params #
 ##################################
+
 @app.route('/body_query', methods=['POST'])
 @validate(query=QueryModel, body=BodyModel, on_success_status=201)
 def body_query() -> BaseResponseModel:
     return BaseResponseModel(
         status='ok',
         message='Body and query params are OK!'
+    )
+
+
+########################################
+# Validate Query, Body and Path params #
+########################################
+
+@app.route('/body_query_path/<param>', methods=['POST'])
+@validate()
+def body_query_path(param: str, query=QueryModel, body=BodyModel) -> BaseResponseModel:
+    return BaseResponseModel(
+        status='ok',
+        message='Body, Query and Path params are OK!'
     )
