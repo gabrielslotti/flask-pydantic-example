@@ -12,3 +12,7 @@ poetry install
 ```shell
 poetry run flask --app app run --debug
 ```
+4. Run tests
+```shell
+poetry run nose2 -v tests
+```
